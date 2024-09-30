@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تسجيل حساب جديد</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body dir="rtl">
+    <div class="wrapper fade-in">
+      <form id="registerationForm" action="submit_form.php" method="post">
+        <h1>تسجيل حساب جديد</h1>
+
+        <div class="input-box">
+          <div class="input-field">
+            <input
+              name="name"
+              type="text"
+              id="name"
+              placeholder="اسم المستخدم"
+              required
+            />
+            <i class="bx bxs-user"></i>
+          </div>
+          <div class="input-field">
+            <input
+              name="full-name"
+              type="text"
+              id="full-name"
+              placeholder="الاسم الكامل"
+              required
+            />
+            <i class="bx bxs-user"></i>
+          </div>
+        </div>
+
+        <div class="input-box">
+          <div class="input-field">
+            <input
+              name="email"
+              type="email"
+              id="email"
+              placeholder="البريد الالكتروني"
+              required
+            />
+            <i class="bx bxs-envelope"></i>
+          </div>
+          <div class="input-field">
+            <select name="type" id="Atype" onchange="showAdditionalFields()">
+              <option value="" disabled selected>اختيار نوع الحساب</option>
+              <option value="1">سائح</option>
+              <option value="2">مرشد</option>
+              <option value="3">مكتب</option>
+            </select>
+            <i class="bx bxs-user-account"></i>
+          </div>
+        </div>
+
+        <div class="input-box">
+          <div class="input-field">
+            <input
+              name="password"
+              type="password"
+              id="password"
+              placeholder="كلمة المرور"
+              required
+            />
+            <i class="bx bxs-lock-alt"></i>
+          </div>
+          <div class="input-field">
+            <input
+              name="password_confirmation"
+              type="password"
+              id="password_confirmation"
+              placeholder="تأكيد كلمة المرور"
+              required
+            />
+            <i class="bx bxs-lock-alt"></i>
+          </div>
+        </div>
+
+        <div class="input-box">
+          <div class="input-field">
+            <input
+              name="city"
+              id="city"
+              type="text"
+              placeholder="المدينة"
+              required
+            />
+            <i class="bx bxs-city"></i>
+          </div>
+          <div class="input-field">
+            <input
+              name="phone_number"
+              type="number"
+              id="phone_number"
+              placeholder="رقم الهاتف"
+              required
+            />
+            <i class="bx bxs-phone"></i>
+          </div>
+          <div
+            id="phone_error"
+            class="phone-error-message"
+            style="display: none"
+          >
+            يجب أن يكون رقم الهاتف مؤلف من 10 خانات فقط!
+          </div>
+        </div>
+        <!-- Client's Addtional Fields -->
+        <div id="clientAdditionalFields" class="hidden fade-in">
+          <div class="input-box">
+            <div class="input-field">
+              <input
+                name="age_user"
+                type="number"
+                id="age_user"
+                class="client-field"
+                placeholder="العمر"
+                required
+              />
+              <i class="bx bxs-user"></i>
+            </div>
+            <div class="input-field">
+              <select
+                name="gender_user"
+                id="gender_user"
+                class="client-field"
+                required
+              >
+                <option value="" disabled selected>الجنس</option>
+                <option value="0">ذكر</option>
+                <option value="1">أنثى</option>
+              </select>
+              <i class="bx bxs-user"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Guide's Additional Fields -->
+        <div id="guideAdditionalFields" class="hidden fade-in">
+          <div class="input-box">
+            <div class="input-field">
+              <input
+                name="age_guide"
+                type="text"
+                id="age_guide"
+                class="guide-field"
+                placeholder="العمر"
+                required
+              />
+              <i class="bx bxs-user"></i>
+            </div>
+            <div class="input-field">
+              <select
+                name="gender_guide"
+                id="gender_guide"
+                class="guide-field"
+                required
+              >
+                <option value="" disabled selected>الجنس</option>
+                <option value="0">ذكر</option>
+                <option value="1">أنثى</option>
+              </select>
+
+              <i class="bx bxs-user"></i>
+            </div>
+          </div>
+
+          <div class="input-box">
+            <div class="input-field">
+              <input
+                name="price_guide"
+                type="number"
+                id="price_guide"
+                class="guide-field"
+                placeholder="السعر"
+                required
+              />
+              <i class="bx bxs-purchase-tag"></i>
+            </div>
+            <div class="input-field">
+              <input
+                name="language_guide"
+                type="text"
+                id="language_guide"
+                class="guide-field"
+                placeholder="اللغات المحكية"
+                required
+              />
+              <i class="bx bxs-book-alt"></i>
+            </div>
+          </div>
+        </div>
+        <!-- Agency's Additional Fields -->
+        <div id="agencyAdditionalFields" class="hidden fade-in">
+          <div class="input-box">
+            <div class="input-field">
+              <input
+                name="location_agency"
+                type="text"
+                id="location_agency"
+                class="agency-field"
+                placeholder="الموقع"
+                required
+              />
+              <i class="bx bxs-location-plus"></i>
+            </div>
+            <div class="input-field">
+              <input
+                name="commercial_record_agency"
+                type="text"
+                id="commercial_record_agency"
+                class="agency-field"
+                placeholder="السجل التجاري"
+                required
+              />
+              <i class="bx bxs-dollar-circle"></i>
+            </div>
+          </div>
+
+          <div class="input-box">
+            <div class="input-field">
+              <input
+                name="price_agency"
+                type="text"
+                id="price_agency"
+                class="agency-field"
+                placeholder="السعر"
+                required
+              />
+              <i class="bx bxs-purchase-tag"></i>
+            </div>
+            <div class="input-field">
+              <input
+                name="language_agency"
+                type="text"
+                id="language_agency"
+                class="agency-field"
+                placeholder="اللغات"
+                required
+              />
+              <i class="bx bxs-book-alt"></i>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn" onclick="register()">
+          إنشاء حساب
+        </button>
+      </form>
+      <div id="errorMessage" class="error-message"></div>
+      <div id="successMessage" class="success-message"></div>
+    </div>
+    <script src="../common/common.js"></script>
+    <script>
+      function toggleRequiredFields(fields, isRequired) {
+        fields.forEach((field) => {
+          if (isRequired) {
+            field.setAttribute("required", "required");
+          } else {
+            field.removeAttribute("required");
+          }
+        });
+      }
+
+      function clearFieldValues(className) {
+        const fields = document.getElementsByClassName(className);
+        Array.from(fields).forEach((field) => (field.value = ""));
+      }
+
+      function removeFields(fields) {
+        fields.forEach((field) => field.remove());
+      }
+      function showAdditionalFields() {
+        const selectedElement = document.querySelector("#Atype");
+        const additionalFieldsForClient = document.querySelector(
+          "#clientAdditionalFields"
+        );
+        const additionalFieldsForGuide = document.querySelector(
+          "#guideAdditionalFields"
+        );
+        const additionalFieldsForAgency = document.querySelector(
+          "#agencyAdditionalFields"
+        );
+
+        if (selectedElement.value === "1") {
+          additionalFieldsForClient.classList.remove("hidden");
+          additionalFieldsForGuide.classList.add("hidden");
+          additionalFieldsForAgency.classList.add("hidden");
+          toggleRequiredFields(
+            additionalFieldsForClient.querySelectorAll(".client-field"),
+            true
+          );
+          toggleRequiredFields(
+            additionalFieldsForGuide.querySelectorAll(".guide-field"),
+            false
+          );
+          toggleRequiredFields(
+            additionalFieldsForAgency.querySelectorAll(".agency-field"),
+            false
+          );
+          clearFieldValues("guide-field");
+          clearFieldValues("agency-field");
+        } else if (selectedElement.value === "2") {
+          additionalFieldsForGuide.classList.remove("hidden");
+          additionalFieldsForClient.classList.add("hidden");
+          additionalFieldsForAgency.classList.add("hidden");
+          toggleRequiredFields(
+            additionalFieldsForGuide.querySelectorAll(".guide-field"),
+            true
+          );
+          toggleRequiredFields(
+            additionalFieldsForClient.querySelectorAll(".client-field"),
+            false
+          );
+          toggleRequiredFields(
+            additionalFieldsForAgency.querySelectorAll(".agency-field"),
+            false
+          );
+          clearFieldValues("client-field");
+          clearFieldValues("agency-field");
+        } else if (selectedElement.value === "3") {
+          additionalFieldsForAgency.classList.remove("hidden");
+          additionalFieldsForGuide.classList.add("hidden");
+          additionalFieldsForClient.classList.add("hidden");
+
+          toggleRequiredFields(
+            additionalFieldsForAgency.querySelectorAll(".agency-field"),
+            true
+          );
+          toggleRequiredFields(
+            additionalFieldsForClient.querySelectorAll(".client-field"),
+            false
+          );
+          toggleRequiredFields(
+            additionalFieldsForGuide.querySelectorAll(".guide-field"),
+            false
+          );
+          clearFieldValues("client-field");
+          clearFieldValues("guide-field");
+        }
+      }
+
+      document
+        .getElementById("registerationForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const registrationForm = new FormData(this);
+          // Remove fields with empty values from FormData to prevent sending them to the server
+          for (const pair of registrationForm.entries()) {
+            const [name, value] = pair;
+            if (value.trim() === "") {
+              console.log(pair);
+              registrationForm.delete(pair);
+            }
+          }
+          for (const pair of registrationForm.entries()) {
+            console.log(pair[0] + ": " + pair[1]);
+          }
+        });
+      // Register Function:
+      function register() {
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const password_confirmation = document.getElementById(
+          "password_confirmation"
+        ).value;
+        const type = document.getElementById("Atype").value;
+        const city = document.getElementById("city").value;
+        const phone_number = document.getElementById("phone_number").value;
+        if (phone_number.length !== 10) {
+          let errorDigits = document.getElementById("phone_error");
+          errorDigits.style.fontFamily = "Tajawal, sans-serif";
+          errorDigits.textContent =
+            "يجب أن يكون رقم الهاتف مؤلف من 10 خانات فقط!";
+          errorDigits.style.backgroundColor = "red";
+          errorDigits.style.color = "white";
+          errorDigits.style.padding = "10px";
+          errorDigits.style.position = "fixed";
+          errorDigits.style.top = "10px";
+          errorDigits.style.left = "50%";
+          errorDigits.style.transform = "translateX(-50%)";
+          errorDigits.style.zIndex = "9999";
+          errorDigits.style.display = "block";
+          // setTimeout(() => {
+          //     errorDigits.remove();
+          //   }, 2000);
+          return;
+        }
+        let url = "";
+        switch (type) {
+          case "1":
+            var age_user = document.getElementById("age_user").value;
+            var gender_user = document.getElementById("gender_user").value;
+            url = `${common.getBaseUrl()}/api/user/register-user`;
+            console.log("successful");
+            break;
+          case "2":
+            var age_guide = document.getElementById("age_guide").value;
+            var gender_guide = document.getElementById("gender_guide").value;
+            var price_guide = document.getElementById("price_guide").value;
+            var language_guide =
+              document.getElementById("language_guide").value;
+            url = `${common.getBaseUrl()}/api/tourGuide/register-tourGuide`;
+            break;
+          case "3":
+            var location_agency =
+              document.getElementById("location_agency").value;
+            var commercial_record_agency = document.getElementById(
+              "commercial_record_agency"
+            ).value;
+            var price_agency = document.getElementById("price_agency").value;
+            var language_agency =
+              document.getElementById("language_agency").value;
+            url = `${common.getBaseUrl()}/api/tourismAgency/register-tourismAgency`;
+            console.log("successful");
+            break;
+          default:
+            console.error("Invalid Registeration");
+            return;
+        }
+        console.log("Attempting to register...");
+        var bodyData = {
+          name,
+          email,
+          password,
+          password_confirmation,
+          city,
+          phone_number,
+        };
+        if (type === "1") {
+          bodyData.gender_user = gender_user;
+          bodyData.age_user = age_user;
+          bodyData.type = type;
+        } else if (type === "2") {
+          bodyData.gender_guide = gender_guide;
+          bodyData.age_guide = age_guide;
+          bodyData.price_guide = price_guide;
+          bodyData.language_guide = language_guide;
+          bodyData.type = type;
+        } else if (type === "3") {
+          bodyData.location_agency = location_agency;
+          bodyData.commercial_record_agency = commercial_record_agency;
+          bodyData.price_agency = price_agency;
+          bodyData.language_agency = language_agency;
+          bodyData.type = type;
+        }
+        fetch(url, {
+          method: "POST",
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bodyData),
+        })
+          .then((response) => {
+            console.log("Response status:", response.status);
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const successDiv = document.createElement("div");
+            successDiv.style.fontFamily = "Tajawal, sans-serif";
+            successDiv.textContent = "تم إنشاء الحساب بنجاح";
+            successDiv.style.backgroundColor = "green";
+            successDiv.style.color = "white";
+            successDiv.style.padding = "10px";
+            successDiv.style.position = "fixed";
+            successDiv.style.top = "10px";
+            successDiv.style.left = "50%";
+            successDiv.style.transform = "translateX(-50%)";
+            successDiv.style.zIndex = "9999";
+            document.body.appendChild(successDiv);
+            setTimeout(() => {
+              successDiv.remove();
+              window.location.href = "../Log in/index.html";
+            }, 1500);
+          })
+          .catch((error) => {
+            console.error("Error during login:", error);
+            document.getElementById("errorMessage").textContent =
+              "!خطأ في أحد الحقول المدخلة";
+          });
+      }
+    </script>
+  </body>
+</html>

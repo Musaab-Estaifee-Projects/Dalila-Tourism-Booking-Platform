@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin</title>
+    <link rel="stylesheet" href="../admin/admin.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body dir="rtl">
+    <div class="container-fluid">
+      <div>
+        <nav class="navbar">
+          <div class="container-fluid">
+            <div class="navBarItems">
+              <div>
+                <i class="bx bx-user-circle bx-lg"></i>
+              </div>
+              <div>
+                <a class="navbar-brand" href="#">مدير دليلة</a>
+              </div>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link" href="#" onclick="signOut()"
+                    >تسجيل الخروج</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <h1 class="requests-header">إدارة المرشدين:</h1>
+      <div class="row">
+        <div class="table-responsive table-area">
+          <table class="table table-hover request-table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">اسم المرشد</th>
+                <th scope="col">البريد الالكتروني</th>
+                <th scope="col">المدينة</th>
+                <th scope="col">رقم الهاتف</th>
+                <th scope="col">الجنس</th>
+                <th scope="col">العمر</th>
+                <th scope="col">السعر</th>
+                <th scope="col">اللغات</th>
+                <th scope="col">التقييم</th>
+                <th scope="col">تاريخ الانضمام</th>
+                <th scope="col">الادوات</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <!-- All Guides will be sisplayed here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <br />
+      <h1 class="requests-header">إدارة المكاتب:</h1>
+      <div class="row">
+        <div class="table-responsive table-area">
+          <table class="table table-hover request-table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">اسم المكتب</th>
+                <th scope="col">البريد الالكتروني</th>
+                <th scope="col">المدينة</th>
+                <th scope="col">رقم الهاتف</th>
+                <!-- <th scope="col">الموقع</th> -->
+                <th scope="col">السجل التجاري</th>
+                <th scope="col">السعر</th>
+                <th scope="col">اللغات</th>
+                <th scope="col">التقييم</th>
+                <th scope="col">تاريخ الانضمام</th>
+                <th scope="col">الادوات</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody1">
+              <!-- All Agencies will be sisplayed here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Modal for confirmation -->
+    <div
+      class="modal fade"
+      id="ModalConfirmation"
+      tabindex="-1"
+      aria-labelledby="agencyModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title" id="agencyModalLabel">هل أنت متأكد؟</h5>
+            </div>
+            <div class="close-button">
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div class="modal-body">
+            <!-- confirmation wil be displayed here -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal for showing reports -->
+    <div
+      class="modal fade"
+      id="ModalReports"
+      tabindex="-1"
+      aria-labelledby="agencyModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header report-header-margin">
+            <div>
+              <h5 class="modal-title" id="agencyModalLabel1">البلاغات</h5>
+            </div>
+            <div class="close-button">
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div class="modal-body-for-reports">
+            <div class="report-info">
+              <!-- reports wil be displayed here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../common/common.js"></script>
+    <script>
+      //Sign Out: Needs some work ...
+      function signOut() {
+        window.location.replace("./adminLogin.html");
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"
+    ></script>
+    <!-- <script src="../temp/agencyTemp.js"></script> -->
+    <!-- Function to show the confirmation -->
+    <script>
+      function showConfirmation() {
+        const modalBody = document.querySelector(".modal-body");
+        modalBody.innerHTML = `
+                            <div class="confirmBtn">
+                              <button id="deleteBtn" class="btn btn-sm btn-success accept-btn">نعم</button>
+                            </div>
+            `;
+        const ModalConfirmation = new bootstrap.Modal(
+          document.getElementById("ModalConfirmation")
+        );
+        ModalConfirmation.show();
+      }
+    </script>
+    <!-- Function to fetch all reports -->
+    <script>
+      const apiUrlForReports = `${common.getBaseUrl()}/api/admin/get-all-reports`;
+      async function fetchAllReports() {
+        try {
+          const response = await axios.get(apiUrlForReports);
+          const reports = response.data;
+          return reports;
+        } catch (error) {
+          console.error("Error fetching reports:", error);
+        }
+      }
+    </script>
+    <!-- Function to show guide reports -->
+    <script>
+      async function showGuideReports(id) {
+        try {
+          let reports = await fetchAllReports();
+          // console.log(reports);
+          const modalBodyForReports = document.querySelector(
+            ".modal-body-for-reports"
+          );
+          modalBodyForReports.innerHTML = "";
+          let foundReports = false;
+          reports.forEach((report) => {
+            // console.log(report.description);
+            if (report.guide_id === id) {
+              const reportInfo = document.createElement("div");
+              reportInfo.classList.add("report-info");
+              reportInfo.innerHTML = `<h5 class="reportStyle">${report.description}</h5>`;
+              modalBodyForReports.appendChild(reportInfo);
+              foundReports = true;
+            }
+          });
+          if (!foundReports) {
+            const reportInfo = document.createElement("div");
+            reportInfo.classList.add("report-info");
+            reportInfo.innerHTML = `<h5 class="reportStyle">لا يوجد أية بلاغات عن هذا المرشد</h5>`;
+            modalBodyForReports.appendChild(reportInfo);
+          }
+          const ModalReports = new bootstrap.Modal(
+            document.getElementById("ModalReports")
+          );
+          ModalReports.show();
+        } catch (error) {
+          console.error("Error displaying reports:", error);
+        }
+      }
+    </script>
+    <!-- Function to show agency reports -->
+    <script>
+      async function showAgencyReports(id) {
+        try {
+          let reports = await fetchAllReports();
+          // console.log(reports);
+          const modalBodyForReports = document.querySelector(
+            ".modal-body-for-reports"
+          );
+          modalBodyForReports.innerHTML = "";
+          let foundReports = false;
+          reports.forEach((report) => {
+            console.log(report.description);
+            if (report.agency_id === id) {
+              const reportInfo = document.createElement("div");
+              reportInfo.classList.add("report-info");
+              reportInfo.innerHTML = `<h5 class="reportStyle">${report.description}</h5>`;
+              modalBodyForReports.appendChild(reportInfo);
+              foundReports = true;
+            }
+          });
+          if (!foundReports) {
+            const reportInfo = document.createElement("div");
+            reportInfo.classList.add("report-info");
+            reportInfo.innerHTML = `<h5 class="reportStyle">لا يوجد أية بلاغات عن هذا المكتب</h5>`;
+            modalBodyForReports.appendChild(reportInfo);
+          }
+          const ModalReports = new bootstrap.Modal(
+            document.getElementById("ModalReports")
+          );
+          ModalReports.show();
+        } catch (error) {
+          console.error("Error displaying reports:", error);
+        }
+      }
+    </script>
+    <!-- Fetching All Guides -->
+    <script>
+      const apiUrlForGuides = `${common.getBaseUrl()}/api/tourGuide/get-all-guides`;
+      async function fetchAllGuides() {
+        try {
+          const response = await axios.get(apiUrlForGuides);
+          const guides = response.data;
+          let tableBody = document.getElementById("tableBody");
+          let tableBodyInner = "";
+          guides.forEach((guide) => {
+            tableBodyInner += `
+                <tr>
+                    <th scope="row">${guide.id}</th>
+                    <td>${guide.name}</td>
+                    <td>${guide.email}</td>
+                    <td>${guide.city}</td>
+                    <td>${guide.phone_number}</td>
+                    <td>${guide.gender_guide === 0 ? "ذكر" : "أنثى"}</td>
+                    <td>${guide.age_guide}</td>
+                    <td>${guide.price_guide}</td>
+                    <td>${guide.language_guide}</td>
+                    <td style="font-size: 9px">${
+                      Math.round(guide.averageRate) === 0
+                        ? `<p style="display: inline-block; font-weight: 700; font-size: 13px; color: rgba(255, 158, 31, 1);">لا يوجد تقييم</p>`
+                        : Math.round(guide.averageRate) === 1
+                        ? `<p style="font-size: 0.9rem;">⭐</p>`
+                        : Math.round(guide.averageRate) === 2
+                        ? `<p style="font-size: 0.9rem;">⭐⭐</p>`
+                        : Math.round(guide.averageRate) === 3
+                        ? `<p style="font-size: 0.9rem;">⭐⭐⭐</p>`
+                        : Math.round(guide.averageRate) === 4
+                        ? `<p style="font-size: 0.9rem;">⭐⭐⭐⭐</p>`
+                        : Math.round(guide.averageRate) === 5
+                        ? `<p style="font-size: 0.9rem;">⭐⭐⭐⭐⭐</p>`
+                        : `<p style="font-weight: 600; font-size: 0.8rem;">خطأ</p>`
+                    }
+                    
+                    </td>
+                    <td>${guide.created_at}</td>
+                    <td>
+                        <div class="action-btns">
+                            <div class="report-btn">
+                                <button class="btn btn-sm btn-warning accept-btn" onclick="showGuideReports(${
+                                  guide.id
+                                })">بلاغ</button>
+                            </div>
+                            <div class="delete-btn">
+                                <button class="btn btn-sm btn-danger accept-btn" onclick="handleDeleteGuide(${
+                                  guide.id
+                                }, '${guide.name}')">حذف</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            `;
+          });
+          tableBody.innerHTML = tableBodyInner;
+        } catch (error) {
+          console.error("Error fetching guides:", error);
+        }
+      }
+      fetchAllGuides();
+      function handleDeleteGuide(guideId, guideName) {
+        showConfirmation();
+        const deleteButton = document.getElementById("deleteBtn");
+        deleteButton.addEventListener(
+          "click",
+          () => {
+            deleteGuide(guideId, guideName);
+          },
+          { once: true }
+        );
+      }
+    </script>
+    <!-- Fetching All Agencies -->
+    <script>
+      const apiUrlForAgencies = `${common.getBaseUrl()}/api/tourismAgency/get-all-agencies`;
+      async function fetchAllAgencies() {
+        try {
+          const response = await axios.get(apiUrlForAgencies);
+          const agencies = response.data;
+          let tableBody1 = document.getElementById("tableBody1");
+          let tableBodyInner = "";
+          agencies.forEach((agency) => {
+            tableBodyInner += `
+                <tr>
+                    <th scope="row">${agency.id}</th>
+                    <td>${agency.name}</td>
+                    <td>${agency.email}</td>
+                    <td>${agency.city}</td>
+                    <td>${agency.phone_number}</td>
+                   <!-- <td>${agency.location_agency}</td> -->
+                    <td>${agency.commercial_record_agency}</td>
+                    <td>${agency.price_agency}</td>
+                    <td>${agency.language_agency}</td>
+                    <td style="font-size: 9px">${
+                          Math.round(agency.averageRate) === 0
+                        ? `<p style="display: inline-block; font-weight: 700; font-size: 13px; color: rgba(255, 158, 31, 1);">لا يوجد تقييم</p>`
+                        : Math.round(agency.averageRate) === 1
+                        ? `<p style="font-size: 0.9rem;">⭐</p>`
+                        : Math.round(agency.averageRate) === 2
+                        ? `<p style="font-size: 0.9rem;">⭐⭐</p>`
+                        : Math.round(agency.averageRate) === 3
+                        ? `<p style="font-size: 0.9rem;">⭐⭐⭐</p>`
+                        : Math.round(agency.averageRate) === 4
+                        ? `<p style="font-size: 0.9rem;">⭐⭐⭐⭐</p>`
+                        : Math.round(agency.averageRate) === 5
+                        ? `<p style="font-size: 0.9rem;">⭐⭐⭐⭐⭐</p>`
+                        : `<p style="font-weight: 600; font-size: 0.8rem;">خطأ</p>`
+                    }
+                    </td>
+                    <td>${agency.created_at}</td>
+                    <td>
+                        <div class="action-btns">
+                            <div class="report-btn">
+                                <button class="btn btn-sm btn-warning accept-btn" onclick="showAgencyReports(${
+                                  agency.id
+                                })">بلاغ</button>
+                            </div>
+                            <div class="delete-btn">
+                                <button class="btn btn-sm btn-danger accept-btn" onclick="handleDeleteAgency(${
+                                  agency.id
+                                }, '${agency.name}')">حذف</button>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            `;
+          });
+          tableBody1.innerHTML = tableBodyInner;
+        } catch (error) {
+          console.error("Error fetching agencies:", error);
+        }
+      }
+      fetchAllAgencies();
+      function handleDeleteAgency(agencyId, agencyName) {
+        showConfirmation();
+        // document
+        //   .getElementById("deleteBtn")
+        //   .addEventListener("click", () => {
+        //     deleteAgency(agencyId, agency_name);
+        //   });
+        const deleteButton = document.getElementById("deleteBtn");
+        deleteButton.addEventListener(
+          "click",
+          () => {
+            deleteAgency(agencyId, agencyName);
+          },
+          { once: true }
+        );
+      }
+    </script>
+    <!-- Delete A Guide -->
+    <script>
+      async function deleteGuide(guide_id, guide_name) {
+        const apiUrlForDeleteAGuide = `${common.getBaseUrl()}/api/admin/delete-guide/${guide_id}`;
+        try {
+          const response = await axios.get(apiUrlForDeleteAGuide);
+          const message = response.data;
+          const successDiv = document.createElement("div");
+          successDiv.style.fontFamily = "Tajawal, sans-serif";
+          successDiv.textContent = `بنجاح ${guide_name} تم حذف المرشد`;
+          successDiv.style.backgroundColor = "green";
+          successDiv.style.color = "white";
+          successDiv.style.padding = "10px";
+          successDiv.style.position = "fixed";
+          successDiv.style.top = "10px";
+          successDiv.style.left = "50%";
+          successDiv.style.transform = "translateX(-50%)";
+          successDiv.style.zIndex = "9999";
+          document.body.appendChild(successDiv);
+          setTimeout(() => {
+            successDiv.remove();
+            location.reload();
+          }, 2000);
+          // console.log(message);
+        } catch (error) {
+          console.log("Error while deleting the guide", error);
+        }
+      }
+    </script>
+    <!-- Delete An Agency -->
+    <script>
+      async function deleteAgency(agency_id, agency_name) {
+        const apiUrlForDeleteAnAgency = `${common.getBaseUrl()}/api/admin/delete-agency/${agency_id}`;
+        try {
+          const response = await axios.get(apiUrlForDeleteAnAgency);
+          const message = response.data;
+          // console.log(message);
+          const successDiv = document.createElement("div");
+          successDiv.style.fontFamily = "Tajawal, sans-serif";
+          successDiv.textContent = `بنجاح ${agency_name} تم حذف المكتب`;
+          successDiv.style.backgroundColor = "green";
+          successDiv.style.color = "white";
+          successDiv.style.padding = "10px";
+          successDiv.style.position = "fixed";
+          successDiv.style.top = "10px";
+          successDiv.style.left = "50%";
+          successDiv.style.transform = "translateX(-50%)";
+          successDiv.style.zIndex = "9999";
+          document.body.appendChild(successDiv);
+          setTimeout(() => {
+            successDiv.remove();
+            location.reload();
+          }, 2000);
+        } catch (error) {
+          console.log("Error while deleting the agency", error);
+        }
+      }
+    </script>
+  </body>
+</html>

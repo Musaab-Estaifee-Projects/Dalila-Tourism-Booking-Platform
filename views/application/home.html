@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Home</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body dir="rtl">
+    <div class="container-fluid">
+      <div>
+        <nav class="navbar">
+          <div class="container-fluid">
+            <div class="navBarItems">
+              <div>
+                <a href="#" onclick="navigateTo()">
+                  <i class="bx bx-user-circle bx-lg"></i>
+                </a>
+              </div>
+              <div>
+                <a class="navbar-brand" href="#">دليلة</a>
+              </div>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <!-- <a class="nav-link" aria-current="page" href="./accountAndRequestsManagement.html"
+                    >إدارة الحساب و الطلبات</a
+                  > -->
+                  <a
+                    class="nav-link"
+                    aria-current="page"
+                    href="#"
+                    onclick="navigateTo()"
+                    >إدارة الحساب و الطلبات</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" onclick="signOut()"
+                    >تسجيل الخروج</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div class="search-input">
+        <form class="d-flex" role="search" onsubmit="search(event)">
+          <button id="submitSearch" class="btn btn-success" type="submit">
+            ابحث
+          </button>
+          <input
+            id="searchArea"
+            class="form-control me-2"
+            type="search"
+            placeholder="ابحث عن مرشد أو مكتب ..."
+            aria-label="Search"
+          />
+        </form>
+      </div>
+
+      <!-- Guide Carousel -->
+      <div id="guideCarouselId" class="carousel">
+        <div id="carouselExampleCaptions" class="carousel slide">
+          <div id="carouselIndicators" class="carousel-indicators"></div>
+          <h1 class="guide-header">اكتشف المرشدين المستقلين:</h1>
+          <div class="carousel-outer">
+            <div class="carousel-inner" id="guideCarousel"></div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="prev"
+          >
+            <span
+              class="carousel-control-prev-icon prev-icon"
+              aria-hidden="true"
+            ></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="next"
+          >
+            <span
+              class="carousel-control-next-icon next-icon"
+              aria-hidden="true"
+            ></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+      <br />
+
+      <!-- Agency Carousel -->
+      <div id="agencyCarouselId" class="carousel1">
+        <div id="carouselExampleCaptions1" class="carousel slide">
+          <div id="carouselIndicators1" class="carousel-indicators"></div>
+          <h1 class="guide-header">اكتشف المكاتب السياحية:</h1>
+          <div class="carousel-outer">
+            <div class="carousel-inner" id="agencyCarousel"></div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleCaptions1"
+            data-bs-slide="prev"
+          >
+            <span
+              class="carousel-control-prev-icon prev-icon"
+              aria-hidden="true"
+            ></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleCaptions1"
+            data-bs-slide="next"
+          >
+            <span
+              class="carousel-control-next-icon next-icon"
+              aria-hidden="true"
+            ></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <br />
+
+    <!-- Modal for displaying guide details -->
+    <div
+      class="modal fade"
+      id="guideModal"
+      tabindex="-1"
+      aria-labelledby="guideModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title" id="guideModalLabel">
+                تفاصيل عن المرشد:
+              </h5>
+            </div>
+            <div class="close-button">
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div class="modal-body-for-guide">
+            <!-- Guide details will be displayed here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for displaying agency details -->
+    <div
+      class="modal fade"
+      id="agencyModal"
+      tabindex="-1"
+      aria-labelledby="agencyModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title" id="agencyModalLabel">
+                تفاصيل عن المكتب:
+              </h5>
+            </div>
+            <div class="close-button">
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div class="modal-body-for-agency">
+            <!-- Agency details will be displayed here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for displaying payment details -->
+    <div
+      class="modal fade"
+      id="paymentModal"
+      tabindex="-1"
+      aria-labelledby="paymentModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title" id="paymentModalLabel">
+                تفاصيل عملية الدفع:
+              </h5>
+            </div>
+            <div class="close-button1">
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div style="width: 100% !important" class="modal-body-for-payment">
+            <!-- payment details will be displayed here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../common/common.js"></script>
+
+    <script>
+      function navigateTo() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const user_id = urlParams.get("id");
+        const queryParams = `?id=${user_id}`;
+        window.location.href = `../application/accountAndRequestsManagement.html${queryParams}`;
+      }
+    </script>
+    <script>
+      //Sign Out: Needs some work ...
+      function signOut() {
+        window.location.replace("../Log in/index.html");
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Fetching All Guides -->
+    <script>
+      const apiUrlForGuides = `${common.getBaseUrl()}/api/tourGuide/get-all-guides`;
+      const carouselInnerForGuides = document.getElementById("guideCarousel");
+      const carouselControlForGuides =
+        document.getElementById("carouselIndicators");
+      async function fetchGuides() {
+        try {
+          const response = await axios.get(apiUrlForGuides);
+          const guides = response.data;
+          let carouselButtons = "";
+          let carouselItems = "";
+          let count = 0;
+          for (let i = 0; i < guides.length; i += 3) {
+            carouselButtons += `<button
+                      type="button"
+                      id="carouselCaption"
+                      data-bs-target="#carouselExampleCaptions"
+                      data-bs-slide-to=${count}
+                      class="active"
+                      aria-current="true"
+                      aria-label="Slide ${count}"
+                    ></button>`;
+            count++;
+            carouselItems += `<div class="carousel-item ${
+              i === 0 ? "active" : ""
+            }"><div class="horizontal-carousel">`;
+            for (let j = i; j < i + 3 && j < guides.length; j++) {
+              const guide = guides[j];
+              carouselItems += `
+                        <div class="card" style="">
+                          <div class="card-body">
+                            <div class="grid-show">
+                              <div class="headers">
+                                <h5 class="card-title">اسم المرشد: <span class="val">${
+                                  guide.name
+                                }</span></h5>
+                                <h5 class="card-title">المنطقة: <span class="val">${
+                                  guide.city
+                                }</span></h5>
+                                <h5 class="card-title">اللغات: <span class="val">${
+                                  guide.language_guide
+                                }</span></h5>
+                                <h5 class="card-title">العمر: <span class="val">${
+                                  guide.age_guide
+                                }</span></h5>
+                                <h5 class="card-title">السعر: <span class="val">${
+                                  guide.price_guide
+                                }</span></h5>
+                              </div>
+                              <div class="gender">
+                                <img width="100px" height="100px" src="${
+                                  guide.gender_guide === 0
+                                    ? "../assets/male.png"
+                                    : "../assets/female.png"
+                                }" alt=""/>
+                              </div>
+                              </div>
+                              <div style="display: flex; align-items: center; justify-content: center">
+                                <p>${
+                                  Math.round(guide.averageRate) === 0
+                                    ? `<p style="font-weight: 600; font-size: 0.8rem; color: rgba(13, 97, 253, 0.837) !important;">لا يوجد تقييم</p>`
+                                    : Math.round(guide.averageRate) === 1
+                                    ? `⭐`
+                                    : Math.round(guide.averageRate) === 2
+                                    ? `⭐⭐`
+                                    : Math.round(guide.averageRate) === 3
+                                    ? `⭐⭐⭐`
+                                    : Math.round(guide.averageRate) === 4
+                                    ? `⭐⭐⭐⭐`
+                                    : Math.round(guide.averageRate) === 5
+                                    ? `⭐⭐⭐⭐⭐`
+                                    : `<p style="font-weight: 600; font-size: 0.8rem;">خطأ</p>`
+                                }</p>
+                              </div>
+                            <div class="details-btn">
+                              <button class="btn btn-primary show-details-btn-for-guide" data-bs-toggle="modal" data-bs-target="#guideModal" data-guide='${JSON.stringify(
+                                guide
+                              )}'>عرض التفاصيل</button>
+                            </div>
+                          </div>
+                        </div>
+                      `;
+            }
+            carouselItems += `</div></div>`;
+          }
+          carouselControlForGuides.innerHTML = carouselButtons;
+          carouselInnerForGuides.innerHTML = carouselItems;
+        } catch (error) {
+          console.error("Error fetching guides:", error);
+        }
+      }
+
+      fetchGuides();
+      // Function to show guide details in modal
+      function showGuideDetails(guide) {
+        const modalBodyForGuide = document.querySelector(
+          ".modal-body-for-guide"
+        );
+        const modalBodyForGuidePayment = document.querySelector(
+          ".modal-body-for-payment"
+        );
+        modalBodyForGuide.innerHTML = `
+                            <div id="gridShow">
+                              <div class="headers">
+                                <h5 class="card-title card-spacing">اسم المرشد: <span class="val card-val">${
+                                  guide.name
+                                }</span></h5>
+                                <h5 class="card-title card-spacing">البريد الالكتروني: <span class="val card-val">${
+                                  guide.email
+                                }</span></h5>
+                                <h5 class="card-title card-spacing">المنطقة: <span class="val card-val">${
+                                  guide.city
+                                }</span></h5>
+                                <h5 class="card-title card-spacing">الرقم: <span class="val card-val">${
+                                  guide.phone_number
+                                }</span></h5>
+                                <h5 class="card-title card-spacing">العمر: <span class="val card-val">${
+                                  guide.age_guide
+                                }</span></h5>
+                                <h5 class="card-title card-spacing">السعر: <span class="val card-val">${
+                                  guide.price_guide
+                                }</span></h5>
+                                <h5 class="card-title card-spacing">اللغات: <span class="val card-val">${
+                                  guide.language_guide
+                                }</span></h5>
+                              </div>
+                              <div class="gender-centering">
+                                <img width="150px" height="150px" src="${
+                                  guide.gender_guide === 0
+                                    ? "../assets/male.png"
+                                    : "../assets/female.png"
+                                }" alt="Gender"/>
+                              </div>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: center">
+                                <p>${
+                                  Math.round(guide.averageRate) === 0
+                                    ? `<p style="font-weight: 600; font-size: 0.8rem; color: rgba(13, 97, 253, 0.837) !important;">لا يوجد تقييم</p>`
+                                    : Math.round(guide.averageRate) === 1
+                                    ? `⭐`
+                                    : Math.round(guide.averageRate) === 2
+                                    ? `⭐⭐`
+                                    : Math.round(guide.averageRate) === 3
+                                    ? `⭐⭐⭐`
+                                    : Math.round(guide.averageRate) === 4
+                                    ? `⭐⭐⭐⭐`
+                                    : Math.round(guide.averageRate) === 5
+                                    ? `⭐⭐⭐⭐⭐`
+                                    : `<p style="font-weight: 600; font-size: 0.8rem;">خطأ</p>`
+                                }</p>
+                              </div>
+                            <div class="flex-pop-up-btns">
+                                <div>
+                                  <button id="requestATourFromAGuide" class="btn btn-warning pop-up-btns">طلب جولة سياحية</button>
+                                </div>
+                                <div>
+                                  <button id="addReportToAGuide" class="btn btn-danger pop-up-btns" onclick="makeGuideReport()">إبلاغ عن المرشد</button>
+                                </div>
+                                <div>
+                                  <button id="contactViaWhatsappToAGuide" class="btn btn-success pop-up-btns"><a href="https://wa.me/966${
+                                    guide.phone_number
+                                  }">تواصل مباشر (واتساب)</a></button>
+                                </div>
+                            </div>
+                            <div id="textAreaForGuide" class="mb-3 fade-in">
+                              <div class="center-label-for-text-area">
+                                <label for="exampleFormControlTextarea1" class="form-label card-title">أكتب بلاغ</label>
+                              </div>
+                              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                              <div class="ReportBtn">
+                                <button id="submitGuideReportBtn" class="btn btn-success pop-up-btns"">إرسال</button>
+                                <button id="cancelGuideReport" class="btn btn-danger pop-up-btns" onclick="cancelGuideReport()">إلغاء</button>
+                              </div>
+                            </div>
+            `;
+        modalBodyForGuidePayment.innerHTML = `<div class="container" style="padding: 0 2rem 2rem">
+              <main>
+                <div class="row">
+                  <div class="col-md-12 col-lg-12">
+                    <br />
+                    <div
+                      style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                      "
+                    >
+                      <h4 class="mb-2">قيمة الخدمة</h4>
+                      <h4 class="mb-2">${guide.price_guide}</h4>
+                    </div>
+                    <form
+                      id="needsValidation"
+                      class="needs-validation"
+                      novalidate
+                    >
+                      <hr class="my-2" />
+                      <div style="margin: 0 -1.2rem 0" class="row gy-3">
+                        <div class="col-md-6">
+                          <label for="cc-name" class="form-label"
+                            >اسم المزود</label
+                          >
+                          <select
+                            style="height: 2.7rem !important"
+                            class="form-select"
+                            id="cc-name"
+                            required
+                          >
+                            <option value="">اختر مزود عملية الدفع</option>
+                            <option dir="ltr" style="font-weight: 500">
+                              Mada
+                            </option>
+                            <option dir="ltr" style="font-weight: 500">
+                              Visa
+                            </option>
+                            <option dir="ltr" style="font-weight: 500">
+                              Credit Card
+                            </option>
+                          </select>
+                          <div class="invalid-feedback">اسم المزود مطلوب</div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <label for="cc-number" class="form-label"
+                            >رقم البطاقة الائتمانية</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="cc-number"
+                            placeholder="0000-0000-0000-0000"
+                            required
+                          />
+                          <div class="invalid-feedback">
+                            حقل رقم البطاقة الائتمانية مطلوب
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <label for="cc-expiration" class="form-label"
+                            >انتهاء صلاحية البطاقة</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="cc-expiration"
+                            placeholder="MM / YY"
+                            required
+                          />
+                          <div class="invalid-feedback">
+                            حقل انتهاء صلاحية البطاقة مطلوب
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <label for="cc-cvv" class="form-label"
+                            >رمز التحقق من البطاقة CVC</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="cc-cvv"
+                            placeholder=""
+                            required
+                          />
+                          <div class="invalid-feedback">
+                            حقل رمز التحقق من البطاقة مطلوب
+                          </div>
+                        </div>
+                      </div>
+
+                      <hr class="my-4" />
+
+                      <button
+                        id="submitPaymentForGuide"
+                        class="w-100 btn btn-primary btn-lg"
+                        type="submit"
+                      >
+                        تأكيد عملية الدفع
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </main>
+            </div>`;
+      }
+
+      // Add event listener to dynamically created "show details" buttons
+      document.addEventListener("click", function (event) {
+        if (
+          event.target &&
+          event.target.matches(".show-details-btn-for-guide")
+        ) {
+          const guide = JSON.parse(event.target.dataset.guide);
+          showGuideDetails(guide);
+          const guideModal = new bootstrap.Modal(
+            document.getElementById("guideModal")
+          );
+          guideModal.show();
+          const submitGuideReportBtn = document.getElementById(
+            "submitGuideReportBtn"
+          );
+          submitGuideReportBtn.addEventListener("click", function (event) {
+            const guide_id = guide.id;
+            const description = document.getElementById(
+              "exampleFormControlTextarea1"
+            ).value;
+            const urlParams = new URLSearchParams(window.location.search);
+            const user_id = urlParams.get("id");
+            // const user_id = getUserId();
+            submitGuideReport(user_id, guide_id, description);
+            setTimeout(() => {
+              guideModal.hide();
+            }, 4000);
+          });
+          const requestATourFromAGuide = document.getElementById(
+            "requestATourFromAGuide"
+          );
+          requestATourFromAGuide.addEventListener("click", function (event) {
+            const paymentModal = new bootstrap.Modal(
+              document.getElementById("paymentModal")
+            );
+            paymentModal.show();
+            const submitPaymentForGuide = document.getElementById(
+              "submitPaymentForGuide"
+            );
+            submitPaymentForGuide.addEventListener("click", (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              const form = document.getElementById("needsValidation");
+              if (!form.checkValidity()) {
+                form.classList.add("was-validated");
+              } else {
+                const guide_id = guide.id;
+                let request_date = getCurrentDate();
+                const urlParams = new URLSearchParams(window.location.search);
+                const user_id = urlParams.get("id");
+                submitATourGuideRequest(user_id, guide_id, request_date);
+                setTimeout(() => {
+                  paymentModal.hide();
+                  guideModal.hide();
+                  location.reload();
+                }, 1500);
+              }
+            });
+          });
+        }
+      });
+
+      // Remove backdrop when modal is closed
+      const guideModal = document.getElementById("guideModal");
+      guideModal.addEventListener("hidden.bs.modal", function (event) {
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+        document.body.classList.remove("modal-open");
+        const modalBackdrop = document.querySelector(".modal-backdrop");
+        if (modalBackdrop) {
+          modalBackdrop.remove();
+          // document.body.style.overflowY = "scroll";
+        }
+        document.body.classList.remove("modal-open");
+      });
+
+      //Getting User Id:
+      // async function getUserId() {
+      //   try {
+      //     const urlParams = new URLSearchParams(window.location.search);
+      //     const userId = urlParams.get("id");
+      //     // console.log("Hi User", userId);
+      //     return userId;
+      //   } catch (error) {
+      //     console.error("Error fetching agencies:", error);
+      //   }
+      // }
+
+      // Make A Guide Report:
+      function makeGuideReport() {
+        let textAreaForGuide = document.getElementById("textAreaForGuide");
+        textAreaForGuide.style.display = "block";
+      }
+
+      //Cancel A Guide Report:
+      function cancelGuideReport() {
+        let textAreaForGuide = document.getElementById("textAreaForGuide");
+        textAreaForGuide.style.display = "none";
+      }
+
+      //Submit A Guide Report:
+      function submitGuideReport(user_id, guide_id, description) {
+        try {
+          // const user_id =  getUserId();
+          const urlForGuideReport = `${common.getBaseUrl()}/api/report/add-report`;
+          console.log("Attempting request...");
+          console.log(
+            "UserId: " + user_id + " GuideId: " + guide_id,
+            "Description: " + description
+          );
+
+          fetch(urlForGuideReport, {
+            method: "POST",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_id, guide_id, description }),
+          })
+            .then((response) => {
+              console.log("Response status:", response.status);
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              const successDiv = document.createElement("div");
+              successDiv.style.fontFamily = "Tajawal, sans-serif";
+              successDiv.textContent = "تمت إضافة البلاغ بنجاح";
+              successDiv.style.backgroundColor = "green";
+              successDiv.style.color = "white";
+              successDiv.style.padding = "10px";
+              successDiv.style.position = "fixed";
+              successDiv.style.top = "10px";
+              successDiv.style.left = "50%";
+              successDiv.style.transform = "translateX(-50%)";
+              successDiv.style.zIndex = "9999";
+              document.body.appendChild(successDiv);
+              setTimeout(() => {
+                // guideModal.remove();
+                successDiv.remove();
+              }, 3000);
+              console.log("Success ...");
+            });
+        } catch (error) {
+          console.error("Error during submitting the report:", error);
+        }
+      }
+
+      //Get Currnet Data:
+      function getCurrentDate() {
+        let temp = new Date();
+        let date = ("0" + temp.getDate()).slice(-2);
+        let month = ("0" + (temp.getMonth() + 1)).slice(-2);
+        let year = temp.getFullYear();
+        return `${year}-${month}-${date}`;
+      }
+
+      // Submit A Tour Guide Request:
+      function submitATourGuideRequest(user_id, guide_id, request_date) {
+        try {
+          const urlForGuideRequest = `${common.getBaseUrl()}/api/request/add-request`;
+          console.log(user_id);
+          console.log(guide_id);
+          console.log(request_date);
+          console.log("Attempting request...");
+          fetch(urlForGuideRequest, {
+            method: "POST",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_id, guide_id, request_date }),
+          })
+            .then((response) => {
+              console.log("Response status:", response.status);
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              const successDiv = document.createElement("div");
+              successDiv.style.fontFamily = "Tajawal, sans-serif";
+              successDiv.textContent = `تمت إضافة جولة سياحية في تاريخ: ${request_date}`;
+              successDiv.style.backgroundColor = "green";
+              successDiv.style.color = "white";
+              successDiv.style.padding = "10px";
+              successDiv.style.position = "fixed";
+              successDiv.style.top = "10px";
+              successDiv.style.left = "50%";
+              successDiv.style.transform = "translateX(-50%)";
+              successDiv.style.zIndex = "9999";
+              document.body.appendChild(successDiv);
+              setTimeout(() => {
+                successDiv.remove();
+              }, 3000);
+              console.log("Success ...");
+            });
+        } catch (error) {
+          console.error("Error during submitting the report:", error);
+        }
+      }
+    </script>
+    <!-- Fetching All Agencies -->
+    <script>
+      const apiUrlForAgencies = `${common.getBaseUrl()}/api/tourismAgency/get-all-agencies`;
+      const carouselInnerForAgencies =
+        document.getElementById("agencyCarousel");
+      const carouselControlForAgencies = document.getElementById(
+        "carouselIndicators1"
+      );
+      async function fetchAgencies() {
+        try {
+          const response = await axios.get(apiUrlForAgencies);
+          const agencies = response.data;
+          // console.log(agencies);
+          let carouselButtons = "";
+          let carouselItems = "";
+          let count = 0;
+          for (let i = 0; i < agencies.length; i += 3) {
+            carouselButtons += `<button
+              type="button"
+              id="carouselCaption1"
+              data-bs-target="#carouselExampleCaptions1"
+              data-bs-slide-to=${count}
+              class="active"
+              aria-current="true"
+              aria-label="Slide ${count}"
+            ></button>`;
+            count++;
+            carouselItems += `<div class="carousel-item ${
+              i === 0 ? "active" : ""
+            }"><div class="horizontal-carousel">`;
+            for (let j = i; j < i + 3 && j < agencies.length; j++) {
+              const agency = agencies[j];
+              carouselItems += `
+                <div class="card" style="">
+                  <div class="card-body">
+                                <div class="grid-show">
+                                    <div class="headers">
+                                        <h5 class="card-title">اسم المكتب: <span class="val">${
+                                          agency.name
+                                        }</span></h5>
+                                        <h5 class="card-title">المنطقة: <span class="val">${
+                                          agency.city
+                                        }</span></h5>
+                                        <h5 class="card-title">اللغات: <span class="val">${
+                                          agency.language_agency
+                                        }</span></h5>
+                                        <h5 class="card-title">رقم الهاتف: <span class="val">${
+                                          agency.phone_number
+                                        }</span></h5>
+                                        <h5 class="card-title">العنوان: <span class="val">${
+                                          agency.location_agency
+                                        }</span></h5>
+                                    </div>
+                                    <div class="gender">
+                                        <img width="100px" height="100px" src="../assets/enterprise.png" alt=""/>
+                                    </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; justify-content: center">
+                                <p>${
+                                  Math.round(agency.averageRate) === 0
+                                    ? `<p style="font-weight: 600; font-size: 0.8rem; color: rgba(13, 97, 253, 0.837) !important;">لا يوجد تقييم</p>`
+                                    : Math.round(agency.averageRate) === 1
+                                    ? `⭐`
+                                    : Math.round(agency.averageRate) === 2
+                                    ? `⭐⭐`
+                                    : Math.round(agency.averageRate) === 3
+                                    ? `⭐⭐⭐`
+                                    : Math.round(agency.averageRate) === 4
+                                    ? `⭐⭐⭐⭐`
+                                    : Math.round(agency.averageRate) === 5
+                                    ? `⭐⭐⭐⭐⭐`
+                                    : `<p style="font-weight: 600; font-size: 0.8rem;">خطأ</p>`
+                                }</p>
+                              </div>
+                                <div class="details-btn">
+                                    <button class="btn btn-primary show-details-btn-for-agency" data-bs-toggle="modal" data-bs-target="#agencyModal" data-agency='${JSON.stringify(
+                                      agency
+                                    )}'>عرض التفاصيل</button>
+                                </div>
+                            </div>
+                </div>
+              `;
+            }
+            carouselItems += `</div></div>`;
+          }
+          carouselControlForAgencies.innerHTML = carouselButtons;
+          carouselInnerForAgencies.innerHTML = carouselItems;
+        } catch (error) {
+          console.error("Error fetching agencies:", error);
+        }
+      }
+      fetchAgencies();
+      // Function to show agency details in modal
+      function showAgencyDetails(agency) {
+        const modalBodyForAgency = document.querySelector(
+          ".modal-body-for-agency"
+        );
+        const modalBodyForAgencyPayment = document.querySelector(
+          ".modal-body-for-payment"
+        );
+        modalBodyForAgency.innerHTML = `
+                                <div id="gridShow">
+                                    <div class="headers">
+                                        <h5 class="card-title card-spacing">اسم المكتب: <span class="val card-val">${
+                                          agency.name
+                                        }</span></h5>
+                                        <h5 class="card-title card-spacing">البريد الالكتروني: <span class="val card-val">${
+                                          agency.email
+                                        }</span></h5>
+                                        <h5 class="card-title card-spacing">المنطقة: <span class="val card-val">${
+                                          agency.city
+                                        }</span></h5>
+                                        <h5 class="card-title card-spacing">رقم الهاتف: <span class="val card-val">${
+                                          agency.phone_number
+                                        }</span></h5>
+                                        <h5 class="card-title card-spacing">العنوان: <span class="val card-val">${
+                                          agency.location_agency
+                                        }</span></h5>
+                                        <h5 class="card-title card-spacing">السجل التجاري: <span class="val card-val">${
+                                          agency.commercial_record_agency
+                                        }</span></h5>
+                                        <h5 class="card-title card-spacing">السعر: <span class="val card-val">${
+                                          agency.price_agency
+                                        }</span></h5>
+                                        <h5 class="card-title card-spacing">اللغات: <span class="val card-val">${
+                                          agency.language_agency
+                                        }</span></h5>
+                                    </div>
+                                    <div class="gender-centering">
+                                        <img width="150px" height="150px" src="../assets/enterprise.png" alt="Agency"/>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: center">
+                                <p>${
+                                  Math.round(agency.averageRate) === 0
+                                    ? `<p style="font-weight: 600; font-size: 0.8rem; color: rgba(13, 97, 253, 0.837) !important;">لا يوجد تقييم</p>`
+                                    : Math.round(agency.averageRate) === 1
+                                    ? `⭐`
+                                    : Math.round(agency.averageRate) === 2
+                                    ? `⭐⭐`
+                                    : Math.round(agency.averageRate) === 3
+                                    ? `⭐⭐⭐`
+                                    : Math.round(agency.averageRate) === 4
+                                    ? `⭐⭐⭐⭐`
+                                    : Math.round(agency.averageRate) === 5
+                                    ? `⭐⭐⭐⭐⭐`
+                                    : `<p style="font-weight: 600; font-size: 0.8rem;">خطأ</p>`
+                                }</p>
+                              </div>
+                                <div class="flex-pop-up-btns">
+                                  <div>
+                                    <button id="requestATourFromAnAgency" class="btn btn-warning pop-up-btns">طلب جولة سياحية</button>
+                                  </div>
+                                  <div>
+                                    <button id="addReportToAnAgency" class="btn btn-danger pop-up-btns" onclick="makeAgencyReport()">إبلاغ عن المكتب</button>
+                                  </div>
+                                  <div>
+                                    <button id="contactViaWhatsappToAnAgency" class="btn btn-success pop-up-btns"><a href="https://wa.me/966${
+                                      agency.phone_number
+                                    }">تواصل مباشر (واتساب)</a></button>
+                                  </div>
+                                </div>
+                                <div id="textAreaForAgency" class="mb-3 fade-in">
+                                  <div class="center-label-for-text-area">
+                                   <label for="exampleFormControlTextarea2" class="form-label card-title">أكتب بلاغ</label>
+                                  </div>
+                                  <textarea class="form-control" id="exampleFormControlTextarea2" rows="3"></textarea>
+                                  <div class="ReportBtn">
+                                    <button id="submitAgencyReportBtn" class="btn btn-success pop-up-btns"">إرسال</button>
+                                    <button id="cancelAgencyReport" class="btn btn-danger pop-up-btns" onclick="cancelAgencyReport()">إلغاء</button>
+                                  </div>
+                                </div>
+                                
+    `;
+        modalBodyForAgencyPayment.innerHTML = `<div class="container" style="padding: 1rem 2rem 3rem">
+              <main>
+                <div class="row">
+                  <div class="col-md-12 col-lg-12">
+                    <br />
+                    <div
+                      style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                      "
+                    >
+                      <h4 class="mb-2">قيمة الخدمة</h4>
+                      <h4 class="mb-2">${agency.price_agency}</h4>
+                    </div>
+                    <form
+                      id="needsValidation"
+                      class="needs-validation"
+                      novalidate
+                    >
+                      <hr class="my-2" />
+                      <div style="margin: 0 -1.2rem 0" class="row gy-3">
+                        <div class="col-md-6">
+                          <label for="cc-name" class="form-label"
+                            >اسم المزود</label
+                          >
+                          <select
+                            style="height: 2.7rem !important"
+                            class="form-select"
+                            id="cc-name"
+                            required
+                          >
+                            <option value="">اختر مزود عملية الدفع</option>
+                            <option dir="ltr" style="font-weight: 500">
+                              Mada
+                            </option>
+                            <option dir="ltr" style="font-weight: 500">
+                              Visa
+                            </option>
+                            <option dir="ltr" style="font-weight: 500">
+                              Credit Card
+                            </option>
+                          </select>
+                          <div class="invalid-feedback">اسم المزود مطلوب</div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <label for="cc-number" class="form-label"
+                            >رقم البطاقة الائتمانية</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="cc-number"
+                            placeholder="0000-0000-0000-0000"
+                            required
+                          />
+                          <div class="invalid-feedback">
+                            حقل رقم البطاقة الائتمانية مطلوب
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <label for="cc-expiration" class="form-label"
+                            >انتهاء صلاحية البطاقة</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="cc-expiration"
+                            placeholder="MM / YY"
+                            required
+                          />
+                          <div class="invalid-feedback">
+                            حقل انتهاء صلاحية البطاقة مطلوب
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <label for="cc-cvv" class="form-label"
+                            >رمز التحقق من البطاقة CVC</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="cc-cvv"
+                            placeholder=""
+                            required
+                          />
+                          <div class="invalid-feedback">
+                            حقل رمز التحقق من البطاقة مطلوب
+                          </div>
+                        </div>
+                      </div>
+
+                      <hr class="my-4" />
+
+                      <button
+                        id="submitPaymentForAgency"
+                        class="w-100 btn btn-primary btn-lg"
+                        type="submit"
+                      >
+                        تأكيد عملية الدفع
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </main>
+            </div>`;
+      }
+
+      // Add event listener to dynamically created "show details" buttons
+      document.addEventListener("click", function (event) {
+        if (
+          event.target &&
+          event.target.matches(".show-details-btn-for-agency")
+        ) {
+          const agency = JSON.parse(event.target.dataset.agency);
+          showAgencyDetails(agency);
+          const agencyModal = new bootstrap.Modal(
+            document.getElementById("agencyModal")
+          );
+          agencyModal.show();
+          const submitAgencyReportBtn = document.getElementById(
+            "submitAgencyReportBtn"
+          );
+          submitAgencyReportBtn.addEventListener("click", function (event) {
+            const agency_id = agency.id;
+            const description = document.getElementById(
+              "exampleFormControlTextarea2"
+            ).value;
+            const urlParams = new URLSearchParams(window.location.search);
+            const user_id = urlParams.get("id");
+            submitAgencyReport(user_id, agency_id, description);
+            setTimeout(() => {
+              agencyModal.hide();
+            }, 4000);
+          });
+          const requestATourFromAnAgency = document.getElementById(
+            "requestATourFromAnAgency"
+          );
+          requestATourFromAnAgency.addEventListener("click", function (event) {
+            const paymentModal = new bootstrap.Modal(
+              document.getElementById("paymentModal")
+            );
+            paymentModal.show();
+            const submitPaymentForAgency = document.getElementById(
+              "submitPaymentForAgency"
+            );
+            submitPaymentForAgency.addEventListener("click", (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              const form = document.getElementById("needsValidation");
+              if (!form.checkValidity()) {
+                form.classList.add("was-validated");
+              } else {
+                const agency_id = agency.id;
+                let request_date = getCurrentDate();
+                const urlParams = new URLSearchParams(window.location.search);
+                const user_id = urlParams.get("id");
+                submitATourAgencyRequest(user_id, agency_id, request_date);
+                setTimeout(() => {
+                  paymentModal.hide();
+                  agencyModal.hide();
+                  // location.reload();
+                }, 1500);
+              }
+            });
+          });
+        }
+      });
+      // Remove backdrop when modal is closed
+      const agencyModal = document.getElementById("agencyModal");
+      agencyModal.addEventListener("hidden.bs.modal", function (event) {
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+        document.body.classList.remove("modal-open");
+        const modalBackdrop = document.querySelector(".modal-backdrop");
+        if (modalBackdrop) {
+          modalBackdrop.remove();
+          // document.body.style.overflowY = "scroll";
+        }
+        document.body.classList.remove("modal-open");
+      });
+
+      // Make An Agency Report:
+      function makeAgencyReport() {
+        let textAreaForAgency = document.getElementById("textAreaForAgency");
+        textAreaForAgency.style.display = "block";
+      }
+
+      //Cancel An Agency Report:
+      function cancelAgencyReport() {
+        let textAreaForAgency = document.getElementById("textAreaForAgency");
+        textAreaForAgency.style.display = "none";
+      }
+
+      //Submit An Agency Report:
+      function submitAgencyReport(user_id, agency_id, description) {
+        try {
+          const urlForAgencyReport = `${common.getBaseUrl()}/api/report/add-report`;
+          console.log("Attempting request...");
+          console.log(
+            "UserId: " + user_id + " AgencyId: " + agency_id,
+            "Description: " + description
+          );
+
+          fetch(urlForAgencyReport, {
+            method: "POST",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_id, agency_id, description }),
+          })
+            .then((response) => {
+              console.log("Response status:", response.status);
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              const successDiv1 = document.createElement("div");
+              successDiv1.style.fontFamily = "Tajawal, sans-serif";
+              successDiv1.textContent = "تمت إضافة البلاغ بنجاح";
+              successDiv1.style.backgroundColor = "green";
+              successDiv1.style.color = "white";
+              successDiv1.style.padding = "10px";
+              successDiv1.style.position = "fixed";
+              successDiv1.style.top = "10px";
+              successDiv1.style.left = "50%";
+              successDiv1.style.transform = "translateX(-50%)";
+              successDiv1.style.zIndex = "9999";
+              document.body.appendChild(successDiv1);
+              setTimeout(() => {
+                successDiv1.remove();
+              }, 3000);
+              console.log("Success ...");
+            });
+        } catch (error) {
+          console.error("Error during submitting the report:", error);
+        }
+      }
+
+      //Get Currnet Data:
+      function getCurrentDate() {
+        let temp = new Date();
+        let date = ("0" + temp.getDate()).slice(-2);
+        let month = ("0" + (temp.getMonth() + 1)).slice(-2);
+        let year = temp.getFullYear();
+        return `${year}-${month}-${date}`;
+      }
+
+      // Submit A Tour Agency Request:
+      function submitATourAgencyRequest(user_id, agency_id, request_date) {
+        try {
+          const urlForAgencyRequest = `${common.getBaseUrl()}/api/request/add-request`;
+          console.log(user_id);
+          console.log(agency_id);
+          console.log(request_date);
+          console.log("Attempting request...");
+          fetch(urlForAgencyRequest, {
+            method: "POST",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_id, agency_id, request_date }),
+          })
+            .then((response) => {
+              console.log("Response status:", response.status);
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              const successDiv = document.createElement("div");
+              successDiv.style.fontFamily = "Tajawal, sans-serif";
+              successDiv.textContent = `تمت إضافة جولة سياحية في تاريخ: ${request_date}`;
+              successDiv.style.backgroundColor = "green";
+              successDiv.style.color = "white";
+              successDiv.style.padding = "10px";
+              successDiv.style.position = "fixed";
+              successDiv.style.top = "10px";
+              successDiv.style.left = "50%";
+              successDiv.style.transform = "translateX(-50%)";
+              successDiv.style.zIndex = "9999";
+              document.body.appendChild(successDiv);
+              setTimeout(() => {
+                successDiv.remove();
+              }, 3000);
+              console.log("Success ...");
+            });
+        } catch (error) {
+          console.error("Error during submitting the report:", error);
+        }
+      }
+    </script>
+
+    <script></script>
+
+    <script>
+      // Function to handle search
+      async function search(event) {
+        event.preventDefault();
+        const searchQuery = document.getElementById("searchArea").value.trim();
+        if (searchQuery === "") {
+          fetchGuides();
+          fetchAgencies();
+          return;
+        }
+        try {
+          const apiUrlForSearching = `${common.getBaseUrl()}/api/user/search/${searchQuery}`;
+          const response = await axios.get(apiUrlForSearching);
+          const { guides, agencies } = response.data;
+          displaySearchResults(guides, agencies);
+        } catch (error) {
+          console.error("Error searching:", error);
+        }
+      }
+
+      // Function to display search results
+      function displaySearchResults(guides, agencies) {
+        const carouselInnerForGuides = document.getElementById("guideCarousel");
+        const carouselInnerForAgencies =
+          document.getElementById("agencyCarousel");
+
+        // Clear existing carousel items
+        carouselInnerForGuides.innerHTML = "";
+        carouselInnerForAgencies.innerHTML = "";
+
+        // Display guide search results
+        if (guides.length > 0) {
+          const carouselItems = generateCarouselItemsForGuides(guides);
+          carouselInnerForGuides.innerHTML = carouselItems;
+        } else {
+          carouselInnerForGuides.innerHTML = `<div class="no-results">
+                <p>لا توجد نتائج بحث مطابقة لأي مرشد</p>
+             </div>`;
+        }
+
+        // Display agency search results
+        if (agencies.length > 0) {
+          const carouselItems = generateCarouselItemsForAgencies(agencies);
+          carouselInnerForAgencies.innerHTML = carouselItems;
+        } else {
+          carouselInnerForAgencies.innerHTML = `<div class="no-results">
+                <p>لا توجد نتائج بحث مطابقة لأي مكتب</p>
+             </div>`;
+        }
+      }
+      //   Function to generate guides search
+      function generateCarouselItemsForGuides(guides) {
+        const carouselControlForGuides =
+          document.getElementById("carouselIndicators");
+        console.log(guides);
+        let carouselButtons = "";
+        let carouselItems = "";
+        let count = 0;
+        for (let i = 0; i < guides.length; i += 3) {
+          carouselButtons += `<button
+                      type="button"
+                      id="carouselCaption"
+                      data-bs-target="#carouselExampleCaptions"
+                      data-bs-slide-to=${count}
+                      class="active"
+                      aria-current="true"
+                      aria-label="Slide ${count}"
+                    ></button>`;
+          count++;
+          carouselItems += `<div class="carousel-item ${
+            i === 0 ? "active" : ""
+          }"><div class="horizontal-carousel">`;
+          for (let j = i; j < i + 3 && j < guides.length; j++) {
+            const guide = guides[j];
+            carouselItems += `
+                        <div class="card" style="">
+                          <div class="card-body">
+                            <div class="grid-show">
+                              <div class="headers">
+                                <h5 class="card-title">اسم المرشد: <span class="val">${
+                                  guide.name
+                                }</span></h5>
+                                <h5 class="card-title">المنطقة: <span class="val">${
+                                  guide.city
+                                }</span></h5>
+                                <h5 class="card-title">اللغات: <span class="val">${
+                                  guide.language_guide
+                                }</span></h5>
+                                <h5 class="card-title">العمر: <span class="val">${
+                                  guide.age_guide
+                                }</span></h5>
+                                <h5 class="card-title">السعر: <span class="val">${
+                                  guide.price_guide
+                                }</span></h5>
+                              </div>
+                              <div class="gender">
+                                <img width="100px" height="100px" src="${
+                                  guide.gender_guide === 0
+                                    ? "../assets/male.png"
+                                    : "../assets/female.png"
+                                }" alt=""/>
+                              </div>
+                              </div>
+                              <div style="display: flex; align-items: center; justify-content: center">
+                                <p>${
+                                  Math.round(guide.averageRate) === 0
+                                    ? `<p style="font-weight: 600; font-size: 0.8rem; color: rgba(13, 97, 253, 0.837) !important;">لا يوجد تقييم</p>`
+                                    : Math.round(guide.averageRate) === 1
+                                    ? `⭐`
+                                    : Math.round(guide.averageRate) === 2
+                                    ? `⭐⭐`
+                                    : Math.round(guide.averageRate) === 3
+                                    ? `⭐⭐⭐`
+                                    : Math.round(guide.averageRate) === 4
+                                    ? `⭐⭐⭐⭐`
+                                    : Math.round(guide.averageRate) === 5
+                                    ? `⭐⭐⭐⭐⭐`
+                                    : `<p style="font-weight: 600; font-size: 0.8rem;">خطأ</p>`
+                                }</p>
+                              </div>
+                            <div class="details-btn">
+                              <button class="btn btn-primary show-details-btn-for-guide" data-bs-toggle="modal" data-bs-target="#guideModal" data-guide='${JSON.stringify(
+                                guide
+                              )}'>عرض التفاصيل</button>
+                            </div>
+                          </div>
+                        </div>
+                      `;
+          }
+          carouselItems += `</div></div>`;
+        }
+        carouselControlForGuides.innerHTML = carouselButtons;
+        //   carouselInnerForGuides.innerHTML = carouselItems;
+        return carouselItems;
+      }
+
+      //   Function to generate agencies search
+      function generateCarouselItemsForAgencies(agencies) {
+        const carouselControlForAgencies = document.getElementById(
+          "carouselIndicators1"
+        );
+        console.log(agencies);
+        let carouselButtons = "";
+        let carouselItems = "";
+        let count = 0;
+        for (let i = 0; i < agencies.length; i += 3) {
+          carouselButtons += `<button
+              type="button"
+              id="carouselCaption1"
+              data-bs-target="#carouselExampleCaptions1"
+              data-bs-slide-to=${count}
+              class="active"
+              aria-current="true"
+              aria-label="Slide ${count}"
+            ></button>`;
+          count++;
+          carouselItems += `<div class="carousel-item ${
+            i === 0 ? "active" : ""
+          }"><div class="horizontal-carousel">`;
+          for (let j = i; j < i + 3 && j < agencies.length; j++) {
+            const agency = agencies[j];
+            carouselItems += `
+                <div class="card" style="">
+                  <div class="card-body">
+                                <div class="grid-show">
+                                    <div class="headers">
+                                        <h5 class="card-title">اسم المكتب: <span class="val">${
+                                          agency.name
+                                        }</span></h5>
+                                        <h5 class="card-title">المنطقة: <span class="val">${
+                                          agency.city
+                                        }</span></h5>
+                                        <h5 class="card-title">اللغات: <span class="val">${
+                                          agency.language_agency
+                                        }</span></h5>
+                                        <h5 class="card-title">رقم الهاتف: <span class="val">${
+                                          agency.phone_number
+                                        }</span></h5>
+                                        <h5 class="card-title">العنوان: <span class="val">${
+                                          agency.location_agency
+                                        }</span></h5>
+                                    </div>
+                                    <div class="gender">
+                                        <img width="100px" height="100px" src="../assets/enterprise.png" alt=""/>
+                                    </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; justify-content: center">
+                                <p>${
+                                  Math.round(agency.averageRate) === 0
+                                    ? `<p style="font-weight: 600; font-size: 0.8rem; color: rgba(13, 97, 253, 0.837) !important;">لا يوجد تقييم</p>`
+                                    : Math.round(agency.averageRate) === 1
+                                    ? `⭐`
+                                    : Math.round(agency.averageRate) === 2
+                                    ? `⭐⭐`
+                                    : Math.round(agency.averageRate) === 3
+                                    ? `⭐⭐⭐`
+                                    : Math.round(agency.averageRate) === 4
+                                    ? `⭐⭐⭐⭐`
+                                    : Math.round(agency.averageRate) === 5
+                                    ? `⭐⭐⭐⭐⭐`
+                                    : `<p style="font-weight: 600; font-size: 0.8rem;">خطأ</p>`
+                                }</p>
+                              </div>
+                                <div class="details-btn">
+                                    <button class="btn btn-primary show-details-btn-for-agency" data-bs-toggle="modal" data-bs-target="#agencyModal" data-agency='${JSON.stringify(
+                                      agency
+                                    )}'>عرض التفاصيل</button>
+                                </div>
+                            </div>
+                </div>
+              `;
+          }
+          carouselItems += `</div></div>`;
+        }
+        carouselControlForAgencies.innerHTML = carouselButtons;
+        // carouselInnerForAgencies.innerHTML = carouselItems;
+        return carouselItems;
+      }
+
+      // Add event listener to the search form
+      document.getElementById("submitSearch").addEventListener("click", search);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تسجيل الدخول</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <img src="../assets/icon.png" alt="" />
+        <h1>دليلة</h1>
+      </div>
+
+      <form id="loginForm" method="POST">
+        <h1>تسجيل الدخول</h1>
+        <div class="input-box">
+          <input
+            name="email"
+            type="email"
+            id="email"
+            placeholder="البريد الالكتروني"
+            required
+          />
+          <i class="bx bxs-user"></i>
+        </div>
+        <div class="input-box">
+          <input
+            name="password"
+            type="password"
+            id="password"
+            placeholder="كلمة المرور"
+            required
+          />
+          <i class="bx bxs-lock-alt"></i>
+        </div>
+
+        <div class="input-box">
+          <select name="Acount-type" id="Atype" required>
+            <option value="" disabled selected>اختيار نوع الحساب</option>
+            <option value="client">سائح</option>
+            <option value="guide">مرشد</option>
+            <option value="office">مكتب</option>
+          </select>
+          <i class="bx bxs-user-account a1"></i>
+          <br />
+          <div id="selectionMessage" class="selection-message"></div>
+        </div>
+
+        <div class="remember-forget">
+          <!-- <label><input type="checkbox" />تذكرني</label> -->
+
+          <!-- <a href="#">هل نسيت كلمة المرور؟</a> -->
+        </div>
+
+        <button type="button" class="btn" onclick="login()">
+          تسجيل الدخول
+        </button>
+
+        <div class="register-link">
+          <a href="../reg/first.html">إنشاء حساب جديد</a>
+        </div>
+      </form>
+      <div id="errorMessage" class="error-message"></div>
+      <div id="successMessage" class="success-message"></div>
+      <script src="../common/common.js"></script>
+      <script>
+        // console.log(common.getBaseUrl());
+        function login() {
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const type = document.getElementById("Atype").value;
+          let url = "";
+          switch (type) {
+            case "client":
+              url = `${common.getBaseUrl()}/api/user/login-user`;
+              console.log("successful");
+              break;
+            case "office":
+              url = `${common.getBaseUrl()}/api/tourismAgency/login-tourismAgency`;
+              break;
+            case "guide":
+              url = `${common.getBaseUrl()}/api/tourGuide/login-tourGuide`;
+              break;
+            default:
+              document.getElementById("selectionMessage").textContent =
+                "!يرجى تحديد نوع المستخدم";
+              console.error("Invalid account type");
+              return;
+          }
+          console.log("Attempting login...");
+          fetch(url, {
+            method: "POST",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password, type }),
+          })
+            .then((response) => {
+              console.log("Response status:", response.status);
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              const Id = data.id;
+              const queryParams = `?id=${Id}`;
+              type === "client"
+                ? (window.location.href = `../application/home.html${queryParams}`)
+                : type === "guide"
+                ? (window.location.href = `../application/html/guide.html${queryParams}`)
+                : (window.location.href = `../application/html/agency.html${queryParams}`);
+              // console.log("Login successful:", data);
+              // document.getElementById("selectionMessage").textContent = "";
+              // document.getElementById("errorMessage").textContent = "";
+              // document.getElementById("successMessage").textContent =
+              //   "تم تسجيل الدخول بنجاح";
+              // window.location.href = "../application/home.html";
+              // const queryParams = `?email=${email}&password=${password}&accountType=${accountType}`;
+            })
+            .catch((error) => {
+              console.error("Error during login:", error);
+              document.getElementById("selectionMessage").textContent = "";
+              document.getElementById("errorMessage").textContent =
+                "!خطأ في الإيميل أو كلمة المرور";
+            });
+        }
+      </script>
+    </div>
+  </body>
+</html>

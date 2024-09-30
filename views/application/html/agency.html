@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agency Info & Requests Details</title>
+    <link rel="stylesheet" href="../styles/agency.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body dir="rtl">
+    <div class="container-fluid">
+      <div>
+        <nav class="navbar">
+          <div class="container-fluid">
+            <div class="navBarItems">
+              <div>
+                <i class="bx bx-user-circle bx-lg"></i>
+              </div>
+              <div>
+                <a class="navbar-brand" href="#">دليلة</a>
+              </div>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link" href="#" onclick="signOut()"
+                    >تسجيل الخروج</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <h1 class="requests-header">معلومات حساب المكتب و إدارة الطلبات:</h1>
+      <div class="row">
+        <div
+          id="agencyInfoArea"
+          class="account-info-area col-lg-3 col-md-12 col-sm-12"
+        >
+          <!-- The user info will be displayed hre -->
+        </div>
+        <div class="table-responsive table-area col-lg-9 col-md-12 col-sm-12">
+          <table class="table table-hover request-table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">حالة الطلب</th>
+                <th scope="col">المرسل</th>
+                <th scope="col">رقم الهاتف</th>
+                <th scope="col">التاريخ</th>
+                <th scope="col">الحالة أو الأدوات</th>
+                <th scope="col">تقييم الطلب</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Modal for confirmation -->
+    <div
+      class="modal fade"
+      id="agencyModalConfirmation"
+      tabindex="-1"
+      aria-labelledby="agencyModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title" id="agencyModalLabel">هل أنت متأكد؟</h5>
+            </div>
+            <div class="close-button">
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div class="modal-body-for-agency">
+            <!-- confirmation wil be displayed here -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../common/common.js"></script>
+    <script>
+      //Sign Out: Needs some work ...
+      function signOut() {
+        window.location.replace("../../Log in/index.html");
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Fetch Agency Info -->
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const agency_id = urlParams.get("id");
+      const apiUrlForUserInfo = `${common.getBaseUrl()}/api/tourismAgency/get-agency/${agency_id}`;
+      const agencyInfoArea = document.getElementById("agencyInfoArea");
+      async function fetchAgency() {
+        try {
+          const response = await axios.get(apiUrlForUserInfo);
+          const agency = response.data;
+          let agencyInfoDetails = "";
+          agencyInfoDetails += `
+            <div class="img-and-card row">
+            <div class="gender-centering col-6">
+              <img width="100px" height="100px" src="../../assets/enterprise.png" alt=""/>
+            </div>
+            <div class="col-6 card card-container" style="width: 18rem">
+              <div class="card-header">معلومات الحساب:</div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  اسم المكتب: <span class="val">${agency.name}</span>
+                </li>
+                <li class="list-group-item">
+                  البريد الالكتروني: <span class="val">${agency.email}</span>
+                </li>
+                <li class="list-group-item">
+                  المدينة: <span class="val">${agency.city}</span>
+                </li>
+                <li class="list-group-item">
+                  رقم الهاتف: <span class="val">${agency.phone_number}</span>
+                </li>
+                <li class="list-group-item">
+                  الموقع: <span class="val">${agency.location_agency}</span>
+                </li>
+                <li class="list-group-item">
+                  السجل التجاري: <span class="val">${
+                    agency.commercial_record_agency
+                  }</span>
+                </li>
+                <li class="list-group-item">
+                  السعر: <span class="val">${agency.price_agency}</span>
+                </li>
+                <li class="list-group-item">
+                  اللغات: <span class="val">${agency.language_agency}</span>
+                </li>
+                <li class="list-group-item">
+                  التقييم: <td style="font-size: 9px">${
+                    Math.round(agency.averageRate) === 0
+                      ? `<p style="display: inline-block; font-size: 13px; color: rgba(223, 201, 57, 1);">لا يوجد تقييم</p>`
+                      : Math.round(agency.averageRate) === 1
+                      ? `⭐`
+                      : Math.round(agency.averageRate) === 2
+                      ? `⭐⭐`
+                      : Math.round(agency.averageRate) === 3
+                      ? `⭐⭐⭐`
+                      : Math.round(agency.averageRate) === 4
+                      ? `⭐⭐⭐⭐`
+                      : Math.round(agency.averageRate) === 5
+                      ? `⭐⭐⭐⭐⭐`
+                      : `<p style="font-weight: 600; font-size: 0.8rem;">خطأ</p>`
+                  }
+                    </td>
+                </li>
+                <li class="list-group-item">
+                  تاريخ الانضمام: <span class="val">${agency.created_at}</span>
+                </li>
+              </ul>
+            </div>
+          </div>`;
+
+          agencyInfoArea.innerHTML = agencyInfoDetails;
+        } catch (error) {
+          console.error("Error fetching user:", error);
+        }
+      }
+
+      fetchAgency();
+    </script>
+    <!-- <script src="../temp/agencyTemp.js"></script> -->
+    <script>
+      const urlParamsForRequests = new URLSearchParams(window.location.search);
+      const agency_id_requests = urlParamsForRequests.get("id");
+      const apiUrlForAgencyRequests = `${common.getBaseUrl()}/api/tourismAgency/get-agency-requests/${agency_id_requests}`;
+      async function fetchUserRequests() {
+        try {
+          const response = await axios.get(apiUrlForAgencyRequests);
+          const agencyRequests = response.data;
+          let tableBody = document.getElementById("tableBody");
+          let tableBodyInner = "";
+          agencyRequests.forEach((agencyRequest) => {
+            let statusText =
+              agencyRequest.status === 0
+                ? `<td style="color: orange; font-weight: 700">قيد المراجعة</td>`
+                : agencyRequest.status === 1
+                ? `<td style="color: green; font-weight: 700">مقبول</td>`
+                : `<td style="color: red; font-weight: 700">مرفوض</td>`;
+            tableBodyInner += `<tr>
+                    <th scope="row">${agencyRequest.id}</th>
+                    ${statusText}
+                    <td>${agencyRequest.user_id.name}</td>
+                    <td>${agencyRequest.user_id.phone_number}</td>
+                    <td>${agencyRequest.request_date}</td>
+                    <td>
+                        <div class="action-btns">
+                            <div class="accept-ignore-btn">
+                                ${
+                                  agencyRequest.status === 0
+                                    ? `<button class="btn btn-sm btn-success accept-btn" onclick="updateStatus(${
+                                        agencyRequest.id
+                                      }, '${1}')">قبول</button>` +
+                                      `<button class="btn btn-sm btn-danger ignore-btn" onclick="updateStatus(${
+                                        agencyRequest.id
+                                      }, '${-1}')">رفض</button>`
+                                    : agencyRequest.status === 1
+                                    ? 
+                                    `<button id="contactViaWhatsappToAGuide" class="btn btn-sm btn-warning"><a href="https://wa.me/966${agencyRequest.user_id.phone_number}">تواصل</a></button>`
+                                    : agencyRequest.status === -1
+                                    ? `<h6 style="color: red; font-weight: 800;">تم الرفض</h6>`
+                                    : "خطأ"
+                                }
+                            </div>
+                        </div>
+                    </td>
+                    ${
+                      agencyRequest.status === 0
+                        ? `<td style="font-size: 14px; font-weight: 700;">في انتظار القبول أو الرفض</td>`
+                        : agencyRequest.status === 1
+                        ? `<td style="font-size: 14px; font-weight: 700;">${
+                            agencyRequest.request_rate === null
+                              ? `لا يوجد تقييم بعد`
+                              : agencyRequest.request_rate.value === 1
+                              ? `<p style="font-size: 0.9rem;">⭐</p>`
+                              : agencyRequest.request_rate.value === 2
+                              ? `<p style="font-size: 0.9rem;">⭐⭐</p>`
+                              : agencyRequest.request_rate.value === 3
+                              ? `<p style="font-size: 0.9rem;">⭐⭐⭐</p>`
+                              : agencyRequest.request_rate.value === 4
+                              ? `<p style="font-size: 0.9rem;">⭐⭐⭐⭐</p>`
+                              : agencyRequest.request_rate.value === 5
+                              ? `<p style="font-size: 0.9rem;">⭐⭐⭐⭐⭐</p>`
+                              : `<p style="font-weight: 600; font-size: 0.8rem; color: red;">خطأ</p>`
+                          }</td>`
+                        : `<td style="font-size: 14px; font-weight: 700;">لا يمكن تقييمه</td>`
+                    }
+                 
+                </tr>
+            `;
+          });
+          tableBody.innerHTML = tableBodyInner;
+        } catch (error) {
+          console.error("Error fetching agency-requests:", error);
+        }
+      }
+      fetchUserRequests();
+    </script>
+    <!-- Function to show the confirmation in the modal -->
+    <script>
+      function showConfirmation() {
+        const modalBodyForAgency = document.querySelector(
+          ".modal-body-for-agency"
+        );
+        modalBodyForAgency.innerHTML = `
+                            <div class="confirmBtn">
+                              <button id="acceptBtn" class="btn btn-sm btn-success accept-btn">نعم</button>
+                            </div>
+            `;
+        const agencyModalConfirmation = new bootstrap.Modal(
+          document.getElementById("agencyModalConfirmation")
+        );
+        agencyModalConfirmation.show();
+      }
+    </script>
+    <!-- Function to handle accepting a request for an agency: -->
+    <script>
+      const apiUrlForUpdatingRequestStatus = `${common.getBaseUrl()}/api/request/update-request-status`;
+      function updateStatus(id, status) {
+        showConfirmation();
+        const requestBtn = document.getElementById("acceptBtn");
+        requestBtn.addEventListener("click", () => {
+          fetch(apiUrlForUpdatingRequestStatus, {
+            method: "POST",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id, status }),
+          })
+            .then((response) => {
+              console.log("Response status:", response.status);
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              const successDiv = document.createElement("div");
+              successDiv.style.fontFamily = "Tajawal, sans-serif";
+              successDiv.textContent = "تمت العملية بنجاح";
+              successDiv.style.backgroundColor = "green";
+              successDiv.style.color = "white";
+              successDiv.style.padding = "10px";
+              successDiv.style.position = "fixed";
+              successDiv.style.top = "10px";
+              successDiv.style.left = "50%";
+              successDiv.style.transform = "translateX(-50%)";
+              successDiv.style.zIndex = "9999";
+              document.body.appendChild(successDiv);
+              setTimeout(() => {
+                successDiv.remove();
+                location.reload();
+              }, 2000);
+            })
+            .catch((error) => {
+              console.error("Error dealing with request", error);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>
